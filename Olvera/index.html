@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Corriente</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="left-section">
+            <!-- Aquí puedes agregar una imagen -->
+            <img src="img.png" alt="Circuito" id="circuit-image">
+        </div>
+        <div class="right-section">
+            <h1>Cálculo de corriente</h1>
+            <div class="form-container">
+                <label for="resistencia">Valor resistencia:</label>
+                <input type="number" id="resistencia" placeholder="Ingrese la resistencia">
+
+                <label for="unidad">Unidad de resistencia:</label>
+                <select id="unidad">
+                    <option value="ohms">Ohms (Ω)</option>
+                    <option value="kilohms">Kiloohms (kΩ)</option>
+                </select>
+
+                <p>Valor de voltaje fijo: 5V</p>
+
+                <button onclick="calcularCorriente()">Calcular Corriente</button>
+
+                <p id="resultado">Corriente: 0 mA</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calcularCorriente() {
+            const resistencia = parseFloat(document.getElementById('resistencia').value);
+            const unidad = document.getElementById('unidad').value;
+            const voltaje = 5; // Voltaje fijo a 5V
+            
+            if (resistencia) {
+                let resistenciaConvertida = resistencia;
+                let corriente;
+
+                // Convertir la resistencia a Ohms si está en kiloohms
+                if (unidad === 'kilohms') {
+                    resistenciaConvertida *= 1000; // 1 kilohm = 1000 ohms
+                    corriente = voltaje / resistenciaConvertida; // Corriente en A
+                    document.getElementById('resultado').innerText = `Corriente: ${corriente.toFixed(2)} A`;
+                } else {
+                    corriente = (voltaje / resistenciaConvertida) * 1000; // Corriente en mA
+                    document.getElementById('resultado').innerText = `Corriente: ${corriente.toFixed(2)} mA`;
+                }
+            } else {
+                document.getElementById('resultado').innerText = 'Por favor, ingrese un valor de resistencia válido.';
+            }
+        }
+    </script>
+</body>
+</html>
